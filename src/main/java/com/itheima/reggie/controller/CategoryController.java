@@ -41,7 +41,7 @@ public class CategoryController {
     @DeleteMapping
     public R<String> delete(Long ids){
         log.info("该删除分类的id是：{}",ids);
-
+        log.info("test github");
         categoryService.remove(ids);
         return R.success("删除分类成功");
     }
