@@ -82,7 +82,6 @@ public class EmployeeController {
     //员工信息分页查询
     @GetMapping("/page")
     public R<Page> page(int page, int pageSize, String name) {
-
         log.info("page:{},pageSize:{},name:{}", page, pageSize, name);
         //构造分页构造器
         Page pageInfo = new Page(page, pageSize);

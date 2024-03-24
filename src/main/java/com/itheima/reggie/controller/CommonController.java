@@ -49,27 +49,29 @@ public class CommonController {
 
     //文件下载
     @GetMapping("/download")
-    public void download(String name, HttpServletResponse response) {
-
+    public void download(String name, HttpServletResponse response){
+        //下载指定文件
+        //通过输入流来读取文件内容
         try {
-            //输入流，通过输入流读取文件内容
-            FileInputStream fileInputStream = new FileInputStream(new File(basePath + name));
-            //输出流，通过输出流将文件写回浏览器，在浏览器展示图片
-            ServletOutputStream outputStream = response.getOutputStream();
-            response.setContentType("image/jpeg");
+            FileInputStream fileInputStream = new FileInputStream(new File(basePath+name));
             byte[] bytes = new byte[1024];
             int len = 0;
-            while ( (len = fileInputStream.read(bytes))!=-1) {
-               outputStream.write(bytes,0,len);
-               outputStream.flush();
+            response.setContentType("image/jpeg");
+            //这个逻辑简单讲一下,就是首先read(bytes)会从输入流中得到数据，然后将数据写入bytes数组中,
+            //并且返回本次读入/写回的长度,只有当读完的时候,len才会等于-1
+            //然后读完之后,将得到的byte通过write,将byte里面的内容通过len的限制写回输出流
+            //循环往复
+            while((len = fileInputStream.read(bytes))!= -1){
+                response.getOutputStream().write(bytes,0,len);
+                response.getOutputStream().flush();
             }
-            outputStream.close();
+            response.getOutputStream().close();
             fileInputStream.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-
+        //通过输出流来写回浏览器,在浏览器中展示图片
     }
+
 
 }
