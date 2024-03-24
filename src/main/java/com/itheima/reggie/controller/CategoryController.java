@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.entity.Category;
+import com.itheima.reggie.entity.Employee;
 import com.itheima.reggie.service.impl.CategoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,12 @@ public class CategoryController {
         log.info("test github");
         categoryService.remove(ids);
         return R.success("删除分类成功");
+    }
+    //根据id修改分类信息
+    @PutMapping
+    public R<String> update(@RequestBody Category category){
+        log.info("修改分类信息:{}",category);
+        categoryService.updateById(category);
+        return R.success("修改分类成功了");
     }
 }
